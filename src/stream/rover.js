@@ -1,4 +1,4 @@
-var pressedKeys = require('./pressed-keys')
+var pressedKeys$ = require('./pressed-keys')
 
 // Map keyCodes tp rover method names
 var keyToAction = {
@@ -17,7 +17,6 @@ var action$ = pressedKeys$
     return keyToAction.hasOwnProperty(key)
   })
   .map(function(key) {
-    console.log(key);
     return keyToAction[key]
   })
 

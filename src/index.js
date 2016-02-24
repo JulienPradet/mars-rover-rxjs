@@ -10,10 +10,14 @@ pressedKeys$.subscribe(function(pressedKeys) {
   document.getElementById('pressed-keys').innerHTML = pressedKeys.join(',')
 })
 
-// Subscribe to the event stream that contains the position of the rover
-var initialRover = Rover(Point(0, 0), 'N')
-var rover$ = require('./rover')(initialRover)
-rover$.subscribe(function(rover) {
-  console.log(rover);
-  document.getElementById('rover-position').innerHTML = rover.toString()
-})
+// Render the scene using React DOM
+var React = require('react')
+var ReactDOM = require('react-dom')
+var RoverView = require('./view/rover')
+
+var initialRover = Rover(Point(100, -100), 'N')
+
+ReactDOM.render(
+  <RoverView initialRover={initialRover} />,
+  document.getElementById('rover')
+)

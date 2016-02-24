@@ -1,4 +1,4 @@
-var rx from 'rx'
+var rx = require('rx')
 
 // Listen to keyDown events (keyboard key has been pressed)
 var keyDown$ = rx.Observable.fromEvent(document, 'keydown')
