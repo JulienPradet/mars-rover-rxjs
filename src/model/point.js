@@ -1,3 +1,6 @@
+// A point is an object described by an x and an y
+
+// Methods on a point object
 var PointMethods = {
   add(point) {
     return Point(
@@ -11,6 +14,7 @@ var PointMethods = {
       this.y - point.y
     )
   },
+  // Should return a point that's symmetric by respect of the origin
   reverse() {
     return Point(
       0 - this.x,
