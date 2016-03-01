@@ -9,7 +9,7 @@ var keyToAction = {
 }
 
 // Create a stream of event with the current actions
-var action$ = pressedKeys$
+module.exports = pressedKeys$
   .flatMap(function(pressedKeys) {
     return pressedKeys
   })
@@ -19,13 +19,3 @@ var action$ = pressedKeys$
   .map(function(key) {
     return keyToAction[key]
   })
-
-// Create a rover stream that contains the current position of the rover
-module.exports = function(initialRover) {
-  return action$.scan(
-    function(rover, action) {
-      return rover[action]()
-    },
-    initialRover
-  )
-}

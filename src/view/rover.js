@@ -1,21 +1,13 @@
 var React = require('react')
 var rover$Factory = require('../stream/rover')
 
-var directionToCharacter = {
-  N: '^',
-  S: 'v',
-  E: '>',
-  W: '<'
+var directionToRotation = {
+  N: 180,
+  S: 0,
+  E: 270,
+  W: 90
 }
 
-function computePositionStyle(rover) {
-  return {
-    position: 'absolute',
-    top: 0 - rover.position.y * 5,
-    left: rover.position.x * 5,
-    fontSize: '5em',
-  }
-}
 
 function computeDirectionCharacter(rover) {
   return directionToCharacter.hasOwnProperty(rover.direction)
@@ -23,38 +15,25 @@ function computeDirectionCharacter(rover) {
     : '.'
 }
 
-class Rover extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      rover: props.initialRover
-    }
-  }
-
-  updateRover(rover) {
-    this.state.rover = rover
-    this.setState(this.state)
-  }
-
-  componentDidMount() {
-    this.state._disposable = rover$Factory(this.props.initialRover)
-      .subscribe(this.updateRover.bind(this))
-    this.setState(this.state)
-  }
-
-  componentWillUnmount() {
-    this.state._disposable.dispose();
-  }
-
-  render() {
-    const roverStyle = computePositionStyle(this.state.rover)
-    const roverCharacter = computeDirectionCharacter(this.state.rover)
-    return (
-      <div style={ roverStyle }>
-        { roverCharacter }
-      </div>
-    )
+function computeStyle({ rover, scaleX, scaleY, width, height }) {
+  return {
+    position: 'absolute',
+    bottom: scaleY(rover.position.y),
+    left: scaleX(rover.position.x),
+    width: width,
+    height: height,
+    textAlign: 'center',
   }
 }
 
-module.exports = Rover
+module.exports = function Rover(props) {
+  return (
+    <g transform={
+      "translate("+props.scaleX(props.rover.position.x)+", "+props.scaleY(props.gridSize.height - props.rover.position.y - 1)+")"+
+      " rotate("+directionToRotation[props.rover.direction]+" "+props.scaleX(0.5)+" "+props.scaleY(0.5)+")"+
+      " scale("+props.scaleX(1)+","+props.scaleY(1)+")"
+    }>
+      <polygon fill="red" points="0,0 0.5,1 1,0" />
+    </g>
+  )
+}

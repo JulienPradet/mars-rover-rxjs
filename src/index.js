@@ -3,21 +3,16 @@ var rx = require('rx')
 // Rover models
 var Point = require('./model/point')
 var Rover = require('./model/rover')
-
-// Subscribe to the event stream of pressed keys
-var pressedKeys$ = require('./stream/pressed-keys')
-pressedKeys$.subscribe(function(pressedKeys) {
-  document.getElementById('pressed-keys').innerHTML = pressedKeys.join(',')
-})
+var Grid = require('./model/grid')
 
 // Render the scene using React DOM
 var React = require('react')
 var ReactDOM = require('react-dom')
-var RoverView = require('./view/rover')
+var Game = require('./view/game')
 
-var initialRover = Rover(Point(100, -100), 'N')
+var initialGrid = Grid({ width: 20, height: 20 }).setRover(Rover(Point(10, 10), 'N'))
 
 ReactDOM.render(
-  <RoverView initialRover={initialRover} />,
+  <Game initialGrid={initialGrid} width={500} height={500} />,
   document.getElementById('rover')
 )
