@@ -10,7 +10,9 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var Game = require('./view/game')
 
-var initialGrid = Grid({ width: 20, height: 20 }).setRover(Rover(Point(10, 10), 'N'))
+var initialGrid = Grid({ width: 20, height: 20 })
+  .setRover(Rover(Point(10, 10), 'N'))
+  .addObstacle(Point(3, 4))
 
 ReactDOM.render(
   <Game initialGrid={initialGrid} width={500} height={500} />,

@@ -1,3 +1,6 @@
+import Rover from './rover'
+import Point from './point'
+
 var GridMethods = {
   setRover(rover) {
     return Grid({
@@ -39,7 +42,16 @@ var GridMethods = {
 
   moveRover(action) {
     var movedRover = this.rover[action]()
-    if(this.isInside(movedRover.position) && !this.isObstacle(movedRover.position)) {
+    if(!this.isObstacle(movedRover.position)) {
+      if(!this.isInside(movedRover.position)) {
+        movedRover = Rover(
+          Point(
+            (movedRover.position.x + this.width) % this.width,
+            (movedRover.position.y + this.height) % this.height
+          ),
+          movedRover.direction
+        )
+      }
       return this.setRover(movedRover)
     } else {
       return this

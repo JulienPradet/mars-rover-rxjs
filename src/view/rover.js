@@ -29,9 +29,9 @@ function computeStyle({ rover, scaleX, scaleY, width, height }) {
 module.exports = function Rover(props) {
   return (
     <g transform={
-      "translate("+props.scaleX(props.rover.position.x)+", "+props.scaleY(props.gridSize.height - props.rover.position.y - 1)+")"+
-      " rotate("+directionToRotation[props.rover.direction]+" "+props.scaleX(0.5)+" "+props.scaleY(0.5)+")"+
-      " scale("+props.scaleX(1)+","+props.scaleY(1)+")"
+      "translate("+(props.rover.position.x)+", "+(props.gridSize.height - props.rover.position.y - 1)+")"+
+      " rotate("+directionToRotation[props.rover.direction]+" "+(0.5)+" "+(0.5)+")"+
+      " scale("+1+","+1+")"
     }>
       <polygon fill="red" points="0,0 0.5,1 1,0" />
     </g>

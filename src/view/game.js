@@ -2,6 +2,7 @@ var React = require('react')
 var grid$Factory = require('../stream/grid')
 var Rover = require('./rover')
 var Grid = require('./grid')
+var Obstacles = require('./obstacles')
 
 function scale(displayWidth, actualWidth) {
   return function(x) {
@@ -45,10 +46,18 @@ class Game extends React.Component {
       scaleY: scale(this.props.height, grid.height),
     }
 
+    var gridSize = {
+      width: grid.width,
+      height: grid.height
+    }
+
     return (
       <svg width={this.props.width} height={this.props.height}>
-        <Grid key="grid" width={ grid.width } height={ grid.height } {...scales} />
-        <Rover rover={ grid.rover } {...scales} width={this.props.width / grid.width} height={this.props.height / grid.height} gridSize={{width: grid.width, height: grid.height}}/>
+        <g transform={"scale("+(this.props.width / grid.width)+", "+(this.props.width / grid.width)+")"}>
+          <Grid key="grid" stroke={1 / this.props.width * grid.width} {...gridSize} />
+          <Obstacles obstacles={grid.obstacles} gridSize={gridSize} />
+          <Rover rover={ grid.rover } width={1} height={1} gridSize={gridSize}/>
+        </g>
       </svg>
     )
   }
